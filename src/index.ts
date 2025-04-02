@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
 import { connectDb } from "./utils/connection";
-import foodRouter from "./routes/createFood";
-import getfoodRouter from "./routes/getFood";
-import deletefoodRouter from "./routes/deleteFood";
-import updateFoodRouter from "./routes/updateFood";
-import dotenv from "dotenv";
+import foodRouter from "./routes/food/createFood";
+import getfoodRouter from "./routes/food/getFood";
+import deletefoodRouter from "./routes/food/deleteFood";
+import updateFoodRouter from "./routes/food/updateFood";
+import categoryRouter from "./routes/category/createCategory";
+import getCategoryRouter from "./routes/category/getCategory";
+import updateCategoryRouter from "./routes/category/updateCategory";
+
 const port = 3000;
 const app = express();
 app.use(express.json());
@@ -17,6 +20,12 @@ app.use("/getfood", getfoodRouter);
 app.use("/deletefood", deletefoodRouter);
 // Хэрэглэгчийн  хоол засах
 app.use("/updatefood", updateFoodRouter);
+// Хэрэглэгчийн хоолний төрөл нэмэх
+app.use("/addcategory", categoryRouter);
+// Хэрэглэгчийн хоолний төрөл харах
+app.use("/getcategory", getCategoryRouter);
+// Хэрэглэгчийн хоолний төрөл засах
+app.use("/updatecategory", updateCategoryRouter);
 
 app.listen(port, async () => {
   await connectDb();
