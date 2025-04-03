@@ -29,3 +29,23 @@ export const createCategory = async (
     }
   }
 };
+export const getCategoriesWithFoods = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const categories = await FoodCategoryModel.aggregate([
+      {
+        $lookup: {
+          from: "foods",
+          localField: "_id",
+          foreignField: "categoryId",
+          as: "foods",
+        },
+      },
+    ]);
+    response.json({ success: true, categories });
+  } catch (error) {
+    response.status(404).json({ success: false, message: error });
+  }
+};
