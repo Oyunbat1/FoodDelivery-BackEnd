@@ -1,34 +1,14 @@
 import express, { Request, Response } from "express";
 import { connectDb } from "./utils/connection";
-import foodRouter from "./routes/food/createFood";
-import getfoodRouter from "./routes/food/getFood";
-import deletefoodRouter from "./routes/food/deleteFood";
-import updateFoodRouter from "./routes/food/updateFood";
+import foodRouter from "./routes/food/Food";
 import { categoryRouter } from "./routes/category/createCategory";
-import getCategoryRouter from "./routes/category/getCategory";
-import updateCategoryRouter from "./routes/category/updateCategory";
-import deleteCategoryRouter from "./routes/category/deleteCategory";
 
-const port = 3000;
+const port = 8000;
 const app = express();
 app.use(express.json());
 
-// Хэрэглэгч хоол нэмэх
-app.use("/addfood", foodRouter);
-// Хэрэглэгчийн  хоол харах
-app.use("/getfood", getfoodRouter);
-// Хэрэглэгчийн  хоол устгах
-app.use("/deletefood", deletefoodRouter);
-// Хэрэглэгчийн  хоол засах
-app.use("/updatefood", updateFoodRouter);
-// Хэрэглэгчийн хоолний төрөл нэмэх
-app.use("/addcategory", categoryRouter);
-// Хэрэглэгчийн хоолний төрөл харах
-app.use("/getcategory", getCategoryRouter);
-// Хэрэглэгчийн хоолний төрөл засах
-app.use("/updatecategory", updateCategoryRouter);
-// Хэрэглэгчийн хоолний төрөл устгах
-app.use("/deletecategory", deleteCategoryRouter);
+app.use("/api/v1/foods", foodRouter);
+app.use("/api/v1/categories", categoryRouter);
 
 app.listen(port, async () => {
   await connectDb();

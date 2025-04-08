@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { FoodCategoryModel } from "./FoodCategory";
 
 const Food = new mongoose.Schema(
   {
@@ -7,7 +8,7 @@ const Food = new mongoose.Schema(
     ingredients: [{ type: [String], required: true }],
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "foodCategory",
+      ref: FoodCategoryModel,
       required: true,
     },
   },
