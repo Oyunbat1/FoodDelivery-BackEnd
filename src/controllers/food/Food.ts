@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { FoodModel } from "../../schema/Food";
 
+//create
 export const createFood = async (req: Request, res: Response) => {
   const created = await FoodModel.create(req.body);
   res.json({
@@ -8,7 +9,7 @@ export const createFood = async (req: Request, res: Response) => {
     food: created,
   });
 };
-//create
+//delete
 export const DeleteFood = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -28,8 +29,7 @@ export const DeleteFood = async (req: Request, res: Response) => {
       .json({ success: false, message: "Error deleting food", error });
   }
 };
-//delete
-
+//get
 export const GetFood = async (req: Request, res: Response) => {
   const created = await FoodModel.find().populate("categoryId");
   res.json({ success: true, created });
