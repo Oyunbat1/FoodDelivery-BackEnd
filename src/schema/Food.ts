@@ -14,6 +14,7 @@ const Food = new mongoose.Schema(
       ref: FoodCategoryModel,
       required: true,
     },
+    imageUrl: { type: String, required: false },
   },
   {
     timestamps: true,
