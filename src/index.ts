@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1/foods", foodRouter);
-
 app.use("/api/v1/categories", categoryRouter);
 
 app.listen(port, async () => {
