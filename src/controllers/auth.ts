@@ -37,7 +37,8 @@ export const login = async (req: Request, res: Response) => {
       .json({ success: false, error: "password or username is wrong" });
     return;
   }
-  const token = jwt.sign(user, ACCESS_TOKEN_SECRET_KEY, { expiresIn: "1h" });
-
-  res.status(200).json({ success: true, user });
+  const token = jwt.sign({ user }, ACCESS_TOKEN_SECRET_KEY, {
+    expiresIn: "1h",
+  });
+  res.status(200).json({ success: true, token });
 };

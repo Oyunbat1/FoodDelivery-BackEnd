@@ -1,13 +1,21 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import { FoodCategoryModel } from "../../schema/FoodCategory";
-
+import jwt from "jsonwebtoken";
 export const createCategory = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  const ACCESS_TOKEN_SECRET_KEY = "Oyunbat1216$";
   try {
-    const { categoryName } = req.body;
+    if (!req.headers["authorization"]) {
+      res.status(401).json({ success: false, msg: "Unauthorization" });
+      return;
+    }
+    const [_, token] = req.headers["authorization"].split(" ");
+    const decode = jwt.verify(token, ACCESS_TOKEN_SECRET_KEY);
+    console.log(decode);
 
+    const { categoryName } = req.body;
     const existingCategory = await FoodCategoryModel.findOne({ categoryName });
     if (existingCategory) {
       res

@@ -6,9 +6,10 @@ import {
   getCategories,
   getCategoriesWithFoods,
 } from "../../controllers/category/Category";
+import { checkToken } from "../../middleware/check-token";
 const categoryRouter = express.Router();
 categoryRouter
-  .post("/", createCategory)
+  .post("/", checkToken, createCategory)
   .get("/", getCategories)
   .get("/with-foods", getCategoriesWithFoods)
   .patch("/:id", updateFoodCategory)
