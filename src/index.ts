@@ -3,6 +3,8 @@ import { connectDb } from "./utils/connection";
 import foodRouter from "./routes/food/Food";
 import { categoryRouter } from "./routes/category/createCategory";
 import cors from "cors";
+import { authRouter } from "./routes/auth";
+
 const port = 8000;
 const app = express();
 app.use(express.json());
@@ -10,6 +12,7 @@ app.use(cors());
 
 app.use("/api/v1/foods", foodRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.listen(port, async () => {
   await connectDb();
