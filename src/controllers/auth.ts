@@ -6,12 +6,14 @@ const SALT_ROUND = 12;
 const ACCESS_TOKEN_SECRET_KEY = "Oyunbat1216$";
 export const register = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
     const { password } = req.body;
     const salt = bcrypt.genSaltSync(SALT_ROUND);
     const hash = bcrypt.hashSync(password, salt);
     const user = await User.create({ ...req.body, password: hash });
     res.json({ success: true, user });
   } catch (err) {
+    console.log(err);
     if ((err as any).code == 11000) {
       res.status(400).json({ success: false, err: "User exist" });
       return;
