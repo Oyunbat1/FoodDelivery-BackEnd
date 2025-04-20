@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import { User } from "../schema/User";
 import jwt from "jsonwebtoken";
+import bcrypt, { hash } from "bcrypt";
 export const resetRequest = async (req: Request, res: Response) => {
   const ACCESS_TOKEN_SECRET_KEY = "Oyunbat1216$";
+
   const { userEmail } = req.body;
 
   const user = await User.findOne({ email: userEmail });
@@ -27,12 +29,21 @@ export const resetRequest = async (req: Request, res: Response) => {
   });
   const info = await transporter.sendMail({
     from: '"Пасспортоо сэргээгээрэй залуу" <maddison53@ethereal.email>',
-    to: "oyunbat9958@gmail.com",
+    to: "dashka.dondog0987@gmail.com",
     subject: " Пасспорт сэргээх✔",
     text: "Пасспортоо сэргээхийн тулд та доох линкен дээр дарна уу...",
     html: `<h1 style="color:red">Пасспорт сэргээх</h1> 
-    <p>Энд дарах <a href="http://localhost:3000/reset-password?token=${token}">энд</a>Пасспорт сэргээх</p>`,
+    <p>Энд дарах <a href="http://localhost:3000//loginInfo/resetpass?token=${token}">энд</a>Пасспорт сэргээх</p>`,
   });
   console.log(info);
   res.send({ message: "Mail sent" });
+};
+
+export const updatePassword = async (req: Request, res: Response) => {
+  const { _id, password } = req.body;
+  const SALT_ROUND = 12;
+  const salt = bcrypt.genSaltSync(SALT_ROUND);
+  const hash = bcrypt.hashSync(password, salt);
+  const user = await User.findByIdAndUpdate(_id, { password: hash });
+  res.json({ success: true, user });
 };
